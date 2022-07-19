@@ -1,0 +1,307 @@
+create table department
+   (
+   dept_no int primary key,
+   dept_name text references department(dept_no),
+   location text
+   );
+
+ create table employee
+ (
+  emp_id int primary key,
+  emp_name text,
+  gender text,
+  dept_no int references employee(dept_no),
+  address text,
+  designation text,
+  salary int,
+  experience text,
+  email text
+  );
+
+sqlite> .tables
+department  employee
+
+ insert into department
+ values(1,"sales","delhi");
+ insert into department values
+ (2,"production","mumbai");
+ insert into department values
+ (3,"it","hyderabad");
+ insert into department values
+ (4,"marketing","ahmadabad");
+ insert into department values
+ (5,"analysis","surat");
+ insert into department values
+ (6,"bca","mp");
+ insert into department values
+ (7,"bba","baroda");
+
+	sqlite> select*from department;
++---------+------------+-----------+
+| dept_no | dept_name  | location  |
++---------+------------+-----------+
+| 1       | sales      | delhi     |
+| 2       | production | mumbai    |
+| 3       | it         | hyderabad |
+| 4       | marketing  | ahmadabad |
+| 5       | analysis   | surat     |
+| 6       | bca        | mp        |
+| 7       | bba        | baroda    |
++---------+------------+-----------+
+
+ insert into employee
+ values(101,"hitaxi","female",1,"valvada","manager",12000,"10 years","abc@gmail.com");
+ insert into employee
+ values(102,"vruti","female",2,"butvada","ceo",50000,"11 years","bhi@gmail.com");
+ insert into employee
+ values(103,"dhruv","male",3,"valod","it",12000,"13 years","dgc@gmail.com");
+ insert into employee 
+ values(104,"vishal","male",4,"surat","profecer",23000,"5 years","ghy@gmail.com");
+ insert into employee
+ values(105,"vidhi","male",5,"bardoli","it",20000,"4 years","etd@gmail.com");
+ insert into employee
+ values(106,"hiya","female",6,"baroda","manager",60000,"7 years","vtg@gmail.com");
+ insert into employee
+ values(107,"mahil","male",7,"valvada","piyun",20000,"6 years","njht@gmail.com");
+
+
+ .mode table
+    select*from employee;
++--------+----------+--------+---------+---------+-------------+--------+------------+----------------+
+| emp_id | emp_name | gender | dept_no | address | designation | salary | experience |     email      |
++--------+----------+--------+---------+---------+-------------+--------+------------+----------------+
+| 101    | hitaxi  | female | 1       | valvada | manager     | 12000  | 10 years   | abc@gmail.com  |
+| 102    | vruti    | female | 2       | butvada | ceo         | 50000  | 11 years   | bhi@gmail.com  |
+| 103    | dhruv    | male   | 3       | valod   | it          | 12000  | 13 years   | dgc@gmail.com  |
+| 104    | vishal   | male   | 4       | surat   | profecer    | 23000  | 5 years    | ghy@gmail.com  |
+| 105    | vidhi   | male   | 5       | bardoli | it          | 20000  | 4 years    | etd@gmail.com  |
+| 106    | hiya     | female | 6       | baroda  | manager     | 60000  | 7 years    | vtg@gmail.com  |
+| 107    | mahil    | male   | 7       | valvada | piyun       | 20000  | 6 years    | njht@gmail.com |
++--------+----------+--------+---------+---------+-------------+--------+------------+----------------+
+
+     select*from department;
++---------+------------+-----------+
+| dept_no | dept_name  | location  |
++---------+------------+-----------+
+| 1       | sales      | delhi     |
+| 2       | production | mumbai    |
+| 3       | it         | hyderabad |
+| 4       | marketing  | ahmadabad |
+| 5       | analysis   | surat     |
+| 6       | bca        | mp        |
+| 7       | bba        | baroda    |
++---------+------------+-----------+
+1)select * from department
+  --> where location like "surat";
+┌─────────┬───────────┬──────────┐
+│ dept_no │ dept_name │ location │
+├─────────┼───────────┼──────────┤
+│ 5       │ ANALYSIS  │ SURAT    │
+└─────────┴───────────┴──────────┘
+
+  2)delete select * from department
+   --> where dept_name like "a%";
+┌─────────┬───────────┬──────────┐
+│ dept_no │ dept_name │ location │
+├─────────┼───────────┼──────────┤
+│ 5       │ ANALYSIS  │ SURAT    │
+└─────────┴───────────┴──────────┘
+
+  3)select * from department
+   --> where dept_no between 1 and 100;
+┌─────────┬────────────┬───────────┐
+│ dept_no │ dept_name  │ location  │
+├─────────┼────────────┼───────────┤
+│ 1       │ SALES      │ DELHI     │
+│ 2       │ PRODUCTION │ MUMBAI    │
+│ 3       │ IT         │ HYDERABAD │
+│ 4       │ MARKETING  │ AHMADABAD │
+│ 5       │ ANALYSIS   │ SURAT     │
+│ 6       │ BCA        │ MP        │
+│ 7       │ IT         │ baroda    │
+└─────────┴────────────┴───────────┘
+
+  4)delete from department
+   --> where dept_name="TRG";
+
+  5)update department
+  --> set dept_name="BBA"
+  --> where dept_name="IT";
+  --> select * from department;
+┌─────────┬────────────┬───────────┐
+│ dept_no │ dept_name  │ location  │
+├─────────┼────────────┼───────────┤
+│ 1       │ SALES      │ DELHI     │
+│ 2       │ PRODUCTION │ MUMBAI    │
+│ 3       │ BBA        │ HYDERABAD │
+│ 4       │ MARKETING  │ AHMADABAD │
+│ 5       │ ANALYSIS   │ SURAT     │
+│ 6       │ BCA        │ MP        │
+│ 7       │ BBA        │ baroda    │
+└─────────┴────────────┴───────────┘
+
+6)select * from department
+  --> where dept_name like "%a%";
+┌─────────┬───────────┬───────────┐
+│ dept_no │ dept_name │ location  │
+├─────────┼───────────┼───────────┤
+│ 1       │ SALES     │ DELHI     │
+│ 3       │ BBA       │ HYDERABAD │
+│ 4       │ MARKETING │ AHMADABAD │
+│ 5       │ ANALYSIS  │ SURAT     │
+│ 6       │ BCA       │ MP        │
+│ 7       │ BBA       │ baroda    │
+└─────────┴───────────┴───────────┘
+
+  7)select * from department
+  --> where location="SURAT" or location="baroda" or location="AHMADABAD";
+┌─────────┬───────────┬───────────┐
+│ dept_no │ dept_name │ location  │
+├─────────┼───────────┼───────────┤
+│ 4       │ MARKETING │ AHMADABAD │
+│ 5       │ ANALYSIS  │ SURAT     │
+│ 7       │ BBA       │ baroda    │
+└─────────┴───────────┴───────────┘
+
+  8)select * from department
+  --> where dept_name not like "sales" and dept_name not like "marketing";
+┌─────────┬────────────┬───────────┐
+│ dept_no │ dept_name  │ location  │
+├─────────┼────────────┼───────────┤
+│ 2       │ PRODUCTION │ MUMBAI    │
+│ 3       │ BBA        │ HYDERABAD │
+│ 5       │ ANALYSIS   │ SURAT     │
+│ 6       │ BCA        │ MP        │
+│ 7       │ BBA        │ baroda    │
+└─────────┴────────────┴───────────┘
+
+  9)select * from department
+   --> order by dept_name asc;
+┌─────────┬────────────┬───────────┐
+│ dept_no │ dept_name  │ location  │
+├─────────┼────────────┼───────────┤
+│ 5       │ ANALYSIS   │ SURAT     │
+│ 3       │ BBA        │ HYDERABAD │
+│ 7       │ BBA        │ baroda    │
+│ 6       │ BCA        │ MP        │
+│ 4       │ MARKETING  │ AHMADABAD │
+│ 2       │ PRODUCTION │ MUMBAI    │
+│ 1       │ SALES      │ DELHI     │
+└─────────┴────────────┴───────────┘
+
+	
+			
+				
+		                                EMPLOYEE TABLE
+
+
+ -->create table employee(emp_no,emp_name varchar(20),gender varchar(10),dept_no int references department(dept_no),address varchar(20),designation varchar(20),salary numeric,experience numeric,email varchar(20));
+-insert into employee values(1,"abhy","male",1,"dubai","ceo",80000,5,"katakiyaabhy02@gmail.com");
+-select * from employee;
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬────────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │           email            │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼────────────────────────────┤
+│ 1      │ abhy │ male   │ 1       │ dubai   │ ceo         │ 80000  │ 5          │ kwmawatkamlesh02@gmail.com │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴────────────────────────────┘
+- insert into employee values(2,"abhy","male",2,"paris","worker",10000,6,"rathodashish@gmail.com");
+- insert into employee values(3,"krish","male",3,"u.s","manager",50000,4,"krishpatel@gmail.com");
+- insert into employee values(4,"nimsha","male",4,"mumbai","worker",70000,5,"krishpatel@gmail.com");
+- insert into employee values(5,"vidhi","female",5,"londan","owner",100000,8,"vidhiiprajapati@gmail.com");
+-insert into employee values(6,"prexa","male",6,"bengal","manager",5000,1,"khushipatel@gmail.com");
+-select * from employee;
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬────────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │           email            │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼────────────────────────────┤
+│ 1      │ kamlesh  │ male   │ 1       │ dubai   │ ceo         │ 80000  │ 5          │ katakiyaabhy02@gmail.com │
+│ 2      │ ashish   │ male   │ 2       │ paris   │ worker      │ 10000  │ 6          │ rathodashish@gmail.com     │
+│ 3      │ krish    │ male   │ 3       │ u.s     │ manager     │ 50000  │ 4          │ patelnimsha@gmail.com       │
+│ 4      │ surendra │ male   │ 4       │ mumbai  │ worker      │ 70000  │ 5          │ patelvidhi@gmail.com       │
+│ 5      │ jyoti    │ female │ 5       │ londan  │ owner       │ 100000 │ 8          │ prajapatividhi@gmail.com   │
+│ 6      │ khushi   │ male   │ 6       │ bengal  │ manager     │ 5000   │ 1          │ patelprexa@gmail.com      │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴────────────────────────────┘
+
+10) select * from employee
+   .> where gender="female";
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬──────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │          email           │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼──────────────────────────┤
+│ 5      │ jyoti    │ female │ 5       │ londan  │ owner       │ 100000 │ 8          │ jyotiprajapati@gmail.com │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴──────────────────────────┘
+
+11) select * from employee
+   .> order by emp_name asc;
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬────────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │           email            │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼────────────────────────────┤
+│ 2      │ ashish   │ male   │ 2       │ paris   │ worker      │ 10000  │ 6          │ rathodashish@gmail.com     │
+│ 5      │ jyoti    │ female │ 5       │ londan  │ owner       │ 100000 │ 8          │ jyotiprajapati@gmail.com   │
+│ 1      │ kamlesh  │ male   │ 1       │ dubai   │ ceo         │ 80000  │ 5          │ kwmawatkamlesh02@gmail.com │
+│ 6      │ khushi   │ male   │ 6       │ bengal  │ manager     │ 5000   │ 1          │ khushipatel@gmail.com      │
+│ 3      │ krish    │ male   │ 3       │ u.s     │ manager     │ 50000  │ 4          │ krishpatel@gmail.com       │
+│ 4      │ surendra │ male   │ 4       │ mumbai  │ worker      │ 70000  │ 5          │ krishpatel@gmail.com       │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴────────────────────────────┘
+
+12) select * from employee
+   ...> where salary*(salary<5000 or salary>2000);
+
+13)select * from employee
+   ...> where gender="female"
+   ...> order by employee.emp_no desc;
+┌────────┬──────────┬────────┬─────────┬──────────┬─────────────┬────────┬────────────┬──────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address  │ designation │ salary │ experience │          email           │
+├────────┼──────────┼────────┼─────────┼──────────┼─────────────┼────────┼────────────┼──────────────────────────┤
+│ 7      │ banti    │ female │ 7       │ bajipura │ worker      │ 9000   │ 8          │ kumawatbanti@gmail.com   │
+│ 6      │ jyoti    │ female │ 6       │ bajipura │ manager     │ 6000   │ 3          │ jyotiprajapati@gmail.com │
+└────────┴──────────┴────────┴─────────┴──────────┴─────────────┴────────┴────────────┴──────────────────────────┘
+
+14)select * from employee
+   ...> where emp_name like 'a%' or emp_name like '%a';
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬─────────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │            email            │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼─────────────────────────────┤
+│ 2      │ ashish   │ male   │ 2       │ ena     │ worker      │ 5000   │ 4          │ rathodashish@gmail.com      │
+│ 4      │ surendra │ male   │ 4       │ surat   │ manager     │ 8000   │ 1          │ prajapatisurendra@gmail.com │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴─────────────────────────────┘
+
+
+15)select * from employee
+   ...> where salary =(select min(salary) from employee);
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬──────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │        email         │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼──────────────────────┤
+│ 3      │ krish    │ male   │ 3       │ baben   │ worker      │ 2000   │ 3          │ krishpatel@gmail.com │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴──────────────────────┘
+
+16)update employee
+   ...> set salary=(salary* 110)/100
+   ...> where designation="manager";
+   ...> select * from employee;
+┌────────┬──────────┬────────┬─────────┬──────────┬─────────────┬────────┬────────────┬─────────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address  │ designation │ salary │ experience │            email            │
+├────────┼──────────┼────────┼─────────┼──────────┼─────────────┼────────┼────────────┼─────────────────────────────┤
+│ 1      │ pratham  │ male   │ 1       │ bardoli  │ manager     │ 22000  │ 5          │ ppratham2301@gmail.com      │
+│ 2      │ ashish   │ male   │ 2       │ ena      │ worker      │ 5000   │ 4          │ rathodashish@gmail.com      │
+│ 3      │ krish    │ male   │ 3       │ baben    │ worker      │ 2000   │ 3          │ krishpatel@gmail.com        │
+│ 4      │ surendra │ male   │ 4       │ surat    │ manager     │ 8800   │ 1          │ prajapatisurendra@gmail.com │
+│ 5      │ kamlesh  │ male   │ 5       │ kamrej   │ ceo         │ 11000  │ 6          │ kumawatkamlesh@gmail.com    │
+│ 6      │ jyoti    │ female │ 6       │ bajipura │ manager     │ 6600   │ 3          │ jyotiprajapati@gmail.com    │
+│ 7      │ banti    │ female │ 7       │ bajipura │ worker      │ 9000   │ 8          │ kumawatbanti@gmail.com      │
+└────────┴──────────┴────────┴─────────┴──────────┴─────────────┴────────┴────────────┴─────────────────────────────┘
+
+17)select * from employee
+   ...> where experience like '1';
+┌────────┬──────────┬────────┬─────────┬─────────┬─────────────┬────────┬────────────┬─────────────────────────────┐
+│ emp_no │ emp_name │ gender │ dept_no │ address │ designation │ salary │ experience │            email            │
+├────────┼──────────┼────────┼─────────┼─────────┼─────────────┼────────┼────────────┼─────────────────────────────┤
+│ 4      │ surendra │ male   │ 4       │ surat   │ manager     │ 8800   │ 1          │ prajapatisurendra@gmail.com │
+└────────┴──────────┴────────┴─────────┴─────────┴─────────────┴────────┴────────────┴─────────────────────────────┘
+
+18)select * from employee
+   ...> where experience>5;
+
+19)select * from department
+   ...> where dept_no
+   ...> not in (select dept_no from employee);
+
+20)delete from employee
+   ...> where salary < 10000;
