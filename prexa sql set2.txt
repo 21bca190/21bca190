@@ -1,0 +1,113 @@
+set-2
+ 
+create table student
+(
+rollno number(10) primary key,
+name varchar2(10) NOT NULL,
+class varchar2(10) NOT NULL,
+birthdate date
+);
+
+insert into student 
+values(0001,'pankaj','fymca','27-jan-1989');
+insert into student 
+values(0002,'rahul','fymca','15-aug-1988');
+insert into student 
+values(0003,'priyesh','tymca','30-apr-1990');
+insert into student 
+values(0004,'ravinder','fymca','27-jan-1989');
+insert into student 
+values(0005,'dheru','symca','15-feb-1987');
+insert into student 
+values(0006,'amit','fymca','19-jun-1989');
+insert into student 
+values(0007,'deepak','symca','25-dec-1989');
+
+create table course
+(
+courseno number(10) primary key,
+coursename varchar(10) NOT NULL,
+max_marks number(4) NOT NULL,
+pass_marks number(4)  NOT NULL
+);
+
+insert into course 
+values(01,'dm',100,50);
+insert into course 
+values(02,'fop',100,50);
+insert into course 
+values(03,'dbms',100,50);
+insert into course 
+values(04,'cn',100,50);
+insert into course 
+values(05,'faco',100,50);
+
+create table sc
+(
+rollno number(10) references student(rollno),
+courseno number(10) references course(courseno),
+marks varchar(10) NOT NULL
+);
+
+
+insert into sc 
+values(0007,04,75);
+insert into sc 
+values(0004,03,45);
+insert into sc
+values(0005,03,70);
+insert into sc 
+values(0004,02,90);
+insert into sc 
+values(0001,01,75);
+insert into sc 
+values(0004,05,80);
+insert into sc 
+values(0006,04,55);
+insert into sc 
+values(0001,03,68);
+insert into sc 
+values(0004,01,36);
+insert into sc 
+values(0003,03,59);
+insert into sc 
+values(0001,05,48);
+insert into sc 
+values(0002,04,99);
+ 
+
+1. Display details of student who takes ‘Database Management System’ course.
+-->select sc.rollno,name from sc,course,student
+   where course.coursename='dbms' and sc.courseno=course.courseno and sc.rollno=student.rollno;
+
+2. Display the names of students who have scored more than 70% in ComputerNetworks and have not failed in any subject.
+-->select sc.rollno, coursename, student.name from course,sc, student 
+   where marks>70 and coursename='cn' and sc.rollno in
+   ( select rollno from sc where rollno not in
+   (select rollno from sc, course where marks<course.pass_marks )) 
+   and student.rollno=sc.rollno;
+
+3. Display the average marks obtained by each student.
+-->select a.rollno, avg(marks) from sc a, student b where a.rollno=b.rollno group by a.rollno;
+
+4. Select all courses where passing marks are more than 30% of average maximummark.
+-->select coursename from course where pass_marks>(select avg(max_marks)*30/100 from course); 
+
+5. Display all course name.
+-->select coursename from course;
+
+6. Display the student details who have secure 1st rank in ‘Computer Network’course.
+-->select student.rollno,student.name,student.class,student.birthdate,max(sc.marks) as "max marks" from student 
+   inner join sc on student.rollno=sc.rollno where sc.courseno="1";
+
+7. Display all SY student list along with course name.
+-->select distinct student.name,student.class,coursename from
+   ((student inner join sc on student.rollno=sc.rolino)
+   inner join course on sc.courseno=course.courseno) 
+   where student.class="symca" group by student.name;
+
+
+8. Display the average marks obtained by each student.
+-->select student.name,avg(sc.marks) as "avg marks" from student 
+   inner join sc on student.rollno=sc.rollno 
+   group by student.name;
